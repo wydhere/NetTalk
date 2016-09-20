@@ -22,21 +22,29 @@ public class RecentListAdapter extends ArrayAdapter<Person> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view;
+		ViewHolder viewHolder = new ViewHolder();
 		Person person = getItem(position);
 		if(convertView == null) {
 			view = LayoutInflater.from(getContext()).inflate(resourceID, null);
+			viewHolder.icon = (ImageView)view.findViewById(R.id.recentlist_image);
+			viewHolder.name = (TextView)view.findViewById(R.id.recentlist_name);
+			viewHolder.record = (TextView)view.findViewById(R.id.recentlist_record);
+			view.setTag(viewHolder);
 		}
 		else {
 			view = convertView;
+			viewHolder = (ViewHolder)view.getTag();
 		}
-		ImageView imageView = (ImageView)view.findViewById(R.id.recentlist_image);
-		TextView name = (TextView)view.findViewById(R.id.recentlist_name);
-		TextView record = (TextView)view.findViewById(R.id.recentlist_record);
-		imageView.setImageResource(person.getImageID());
-		name.setText(person.getName());
-		Message message = person.getLastRecord();
-		if(message != null)
-			record.setText(message.getMsg());
+		viewHolder.icon.setImageResource(person.getImageID());
+		viewHolder.name.setText(person.getName());
+		String message = person.getLastMsg();
+		viewHolder.record.setText(message);
 		return view;
+	}
+	class ViewHolder {
+		public ImageView icon;
+		public TextView name;
+		public TextView record;
+		public TextView time;
 	}
 }

@@ -2,14 +2,31 @@ package net.wyd.nettalk.model;
 
 import java.io.Serializable;
 
+import net.wyd.nettalk.utils.Utilities;
+
 public class Message implements Serializable {
-	static final long serialVersionUID = 1L;
-	private String msg;
-	private boolean isSent = false;
 	
-	public Message(String msg, boolean isSent) {
+	public static final int TYPE_RECEIVED = 0;
+	public static final int TYPE_SENT = 1;
+	static final long serialVersionUID = 1L;
+	private Person sender;
+	private String msg;
+	private int type;
+	private long time;
+	
+	public Message(String msg, int type, Person sender) {
 		this.msg = msg;
-		this.isSent = isSent;
+		this.type = type;
+		this.sender = sender;
+		this.time = System.currentTimeMillis();
+	}
+	
+	public Person getSender() {
+		return sender;
+	}
+	
+	public void setSender(Person sender) {
+		this.sender = sender;
 	}
 	
 	public String getMsg() {
@@ -20,7 +37,11 @@ public class Message implements Serializable {
 		this.msg = msg;
 	}
 	
-	public boolean isSent() {
-		return isSent;
+	public int getType() {
+		return type;
+	}
+	
+	public String getTime() {
+		return Utilities.formatTime(time);
 	}
 }

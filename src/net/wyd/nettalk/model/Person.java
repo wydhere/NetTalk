@@ -1,11 +1,10 @@
 package net.wyd.nettalk.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-import android.R.integer;
-import android.graphics.Bitmap;
 
-public class Person {
+public class Person implements Serializable {
 	public enum SEX {
 		MALE,FEMALE
 	}
@@ -13,7 +12,6 @@ public class Person {
 	private SEX sex;
 	private long id;
 	private String group;
-	private long time;
 	private int imageID;
 	private ArrayList<Message> record = new ArrayList<Message>();
 	
@@ -23,7 +21,6 @@ public class Person {
 		this.id = id;
 		this.imageID = imageID;
 		this.group = group;
-		this.time = System.currentTimeMillis();
 	}
 	
 	public String getName() {
@@ -42,10 +39,6 @@ public class Person {
 		return group;
 	}
 	
-	public long getTime() {
-		return time;
-	}
-	
 	public int getImageID() {
 		return imageID;
 	}
@@ -54,10 +47,12 @@ public class Person {
 		return record;
 	}
 	
-	public Message getLastRecord() {
-		if(record.size() > 0)
-			return record.get(record.size() - 1);
-		return null;
+	public String getLastMsg() {
+		String msg = null;
+		if(!record.isEmpty()) {
+			msg = record.get(record.size() - 1).getMsg();
+		}
+		return msg;
 	}
 	
 	public void addRecord(Message message) {
