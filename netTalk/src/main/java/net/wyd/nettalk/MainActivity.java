@@ -1,59 +1,43 @@
 package net.wyd.nettalk;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.design.widget.TabLayout.Tab;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.util.Log;
+import android.view.View;
+
+import net.wyd.nettalk.model.Person;
 
 public class MainActivity extends BaseActivity {
 	private Fragment[] fragments = {null, null};
 	private final String[] tags = {"RecentListFragment", "ContactsFragment" };
-	private TabLayout tabLayout;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_layout);
 		Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+		toolbar.setTitle(Person.ME.getName());
 		setSupportActionBar(toolbar);
-		tabLayout = (TabLayout)findViewById(R.id.tablayout);
-		int index = 0;
-		if(savedInstanceState != null)
-			index = savedInstanceState.getInt("tabSelectedIndex", 0);
-		setSelectedFragment(index);
-		tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-			
+		toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
+		FloatingActionButton fbutton = (FloatingActionButton)findViewById(R.id.float_button);
+		fbutton.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onTabUnselected(Tab arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onTabSelected(Tab tab) {
-				// TODO Auto-generated method stub
-				int position = tab.getPosition();
-				setSelectedFragment(position);
-				Log.d("TabLayout", "select" + String.valueOf(position));
-			}
-			
-			@Override
-			public void onTabReselected(Tab arg0) {
-				// TODO Auto-generated method stub
-				Log.d("TabLayout", "reselect" + String.valueOf(arg0.getPosition()));
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this, ContactsActivity.class);
+				startActivity(intent);
 			}
 		});
+		setSelectedFragment(0);
 	}
 	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
-		outState.putInt("tabSelectedIndex", tabLayout.getSelectedTabPosition());
 	}
 	
 	private void setSelectedFragment(int position) {

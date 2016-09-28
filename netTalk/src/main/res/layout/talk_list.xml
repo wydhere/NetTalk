@@ -8,8 +8,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:id="@+id/msg_list"
-        android:divider="#0000"
-        android:clickable="false" />
+        android:divider="#0000" />
     <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,14 +18,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:maxLines="1"
-            android:id="@+id/input_edit" />
+            android:id="@+id/input_edit"
+            android:imeOptions="actionSend"/>
         <Button 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/send_button"
             android:id="@+id/send_button"
-            android:enabled="false"
-            android:imeOptions="actionSend"/>
+            android:enabled="false" />
     </LinearLayout>
 
 </LinearLayout>
